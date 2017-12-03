@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Naching/Racket-Online-IDE/issues"
   },
-  "homepage": "https://github.com/Naching/Racket-Online-IDE#readme"
+  "homepage": "https://github.com/Naching/Racket-Online-IDE#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
 }
