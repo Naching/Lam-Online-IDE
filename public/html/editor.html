@@ -6,7 +6,7 @@
     <script src="/codemirror/lib/codemirror.js"></script>
     <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="/codemirror/theme/material.css">
-    <script src="/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/public/js/mode/lam-mode.js"></script>
     <script src="/codemirror/addon/edit/matchbrackets.js"></script>
   </head>
   <body>
@@ -28,22 +28,4 @@
     </div>
   </body>
 </html>
-<script>
-  var input = document.getElementById('input');
-  var myCodeMirror = CodeMirror.fromTextArea(input, {
-    mode: "javascript",
-    matchbrackets: true,
-    lineNumbers: true,
-    theme: "material",
-    indentUnit: 3,
-    tabSize: 3,
-    lineWrapping: true
-  });
-  function run(){
-    console.log("run");
-    document.getElementById('run').innerHTML = interpret(myCodeMirror.getValue());
-  }
-  function stop(){
-    console.log("stop");
-  }
-</script>
+<script src="/public/js/editor.js"></script>
