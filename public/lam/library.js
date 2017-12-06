@@ -8,4 +8,7 @@ num-max = lambda(a, b) if a > b then{a} else{b};
 
 #min function
 num-min = lambda(a, b) if a < b then{a} else{b};
+
+#exponential function
+num-exp = lambda(a) num-e ^ a;
 `
