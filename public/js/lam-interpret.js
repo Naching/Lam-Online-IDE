@@ -21,7 +21,7 @@ function evaluate(exp, env){
     return exp.value;
 
     case "var":
-    if (env[exp.value]) return env[exp.value];
+    if (env[exp.value] === 0 || env[exp.value]) return env[exp.value];
     throw new Error("Undefined identifier: " + exp.value);
 
     case "assign":
@@ -86,6 +86,7 @@ function evaluate(exp, env){
       return x;
     }
     switch (op) {
+      case "^": return num(a) ** num(b);
       case "+": return num(a) + num(b);
       case "-": return num(a) - num(b);
       case "*": return num(a) * num(b);
@@ -129,7 +130,7 @@ function evaluate(exp, env){
 
   function TokenStream(input) {
     var current = null;
-    var keywords = " if then else lambda Î» true false ";
+    var keywords = " if then else lambda true false ";
     return {
       next  : next,
       peek  : peek,
@@ -149,7 +150,7 @@ function evaluate(exp, env){
       return is_id_start(ch) || "?!-<>=0123456789".indexOf(ch) >= 0;
     }
     function is_op_char(ch) {
-      return "+-*/%=&|<>!".indexOf(ch) >= 0;
+      return "^+-*/%=&|<>!".indexOf(ch) >= 0;
     }
     function is_punc(ch) {
       return ",;(){}[]".indexOf(ch) >= 0;
@@ -252,7 +253,7 @@ function evaluate(exp, env){
       "&&": 3,
       "<": 7, ">": 7, "<=": 7, ">=": 7, "==": 7, "!=": 7,
       "+": 10, "-": 10,
-      "*": 20, "/": 20, "%": 20,
+      "*": 20, "/": 20, "%": 20, "^" : 25
     };
     var FALSE = { type: "bool", value: false };
     return parse_toplevel();
