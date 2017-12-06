@@ -3,6 +3,11 @@
     <title>Lam Interpreter</title>
     <link rel="stylesheet" type="text/css" href="/public/css/style.css">
     <script src="/public/js/lam-interpret.js"></script>
+    <script src="/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/codemirror/theme/material.css">
+    <script src="/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/codemirror/addon/edit/matchbrackets.js"></script>
   </head>
   <body>
     <div class='top-bar'>
@@ -16,7 +21,7 @@
     </div>
     <div class='main'>
       <div class='edit-box'>
-        <textarea name="Text1" cols="80" rows="40" id='input'></textarea>
+        <textarea id='input' rows="80" cols="80"></textarea>
       </div>
       <div class='run-box' id='run'>
       </div>
@@ -24,9 +29,19 @@
   </body>
 </html>
 <script>
+  var input = document.getElementById('input');
+  var myCodeMirror = CodeMirror.fromTextArea(input, {
+    mode: "javascript",
+    matchbrackets: true,
+    lineNumbers: true,
+    theme: "material",
+    indentUnit: 3,
+    tabSize: 3,
+    lineWrapping: true
+  });
   function run(){
     console.log("run");
-    document.getElementById('run').innerHTML = interpret(document.getElementById('input').value);
+    document.getElementById('run').innerHTML = interpret(myCodeMirror.getValue());
   }
   function stop(){
     console.log("stop");

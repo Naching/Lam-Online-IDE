@@ -1,5 +1,5 @@
 body{
-  background-color: #222;
+  background-color: #263238;;
   color: #ccc;
   font: sans-serif;
 }
@@ -35,7 +35,7 @@ body{
   float: left;
   text-align: center;
   dispay: block;
-  color: #222;
+  color: #263238;;
 }
 
 .my-button{
@@ -59,6 +59,7 @@ body{
   padding-right: 44px;
 }
 */
+
 
 .stop-button{
   background-color: #600;
