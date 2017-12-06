@@ -3,6 +3,7 @@ function interpret(code){
   if (code === "") return "";
   try{
       var env = {};
+      code = library + "\n" + code;
       var ast = parse(TokenStream(InputStream(code)));
       var evaluated = evaluate(ast, env);
       return evaluated;
