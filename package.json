@@ -1,7 +1,7 @@
 {
-  "name": "racket-web-app",
+  "name": "lam-web-ide",
   "version": "1.0.0",
-  "description": "",
+  "description": "Online IDE for programming language Lam",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
