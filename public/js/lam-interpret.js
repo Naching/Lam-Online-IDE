@@ -63,13 +63,10 @@ function evaluate(exp, env){
   }
 
   function make_lambda(env, exp) {
-    var scope = JSON.parse(JSON.stringify(env));
-    console.log(JSON.stringify(env));
-    console.log(env);
-    console.log(scope);
-    scope = Object.assign(env);
-    console.log(env);
-    console.log(scope);
+    var scope = {};
+    for(var k in env) scope[k]=env[k];
+    var static_vars = JSON.parse(JSON.stringify(env));
+    for(var k in static_vars) scope[k]=static_vars[k];
     function lambda() {
       var names = exp.vars;
       for (var i = 0; i < names.length; ++i)
