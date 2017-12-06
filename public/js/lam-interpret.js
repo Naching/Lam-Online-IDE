@@ -1,4 +1,6 @@
+//entry point from browser
 function interpret(code){
+  if (code === "") return "";
   try{
       var env = {};
       var ast = parse(TokenStream(InputStream(code)));
@@ -9,6 +11,7 @@ function interpret(code){
     }
 }
 
+//top-level eval function
 function evaluate(exp, env){
   switch (exp.type) {
     case "num":
@@ -17,7 +20,8 @@ function evaluate(exp, env){
     return exp.value;
 
     case "var":
-    return env[exp.value];
+    if (env[exp.value]) return env[exp.value];
+    throw new Error("Undefined identifier: " + exp.value);
 
     case "assign":
     if (exp.left.type != "var")
