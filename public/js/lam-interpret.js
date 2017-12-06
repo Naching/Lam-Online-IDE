@@ -5,7 +5,9 @@ function interpret(code){
       var env = {};
       code = library + "\n" + code;
       var ast = parse(TokenStream(InputStream(code)));
+      //console.log(ast);
       var evaluated = evaluate(ast, env);
+      //console.log(env);
       return evaluated;
     } catch(err){
       return err.message
@@ -14,6 +16,7 @@ function interpret(code){
 
 //top-level eval function
 function evaluate(exp, env){
+//console.log(env);
   switch (exp.type) {
     case "num":
     case "str":
@@ -61,6 +64,12 @@ function evaluate(exp, env){
 
   function make_lambda(env, exp) {
     var scope = JSON.parse(JSON.stringify(env));
+    console.log(JSON.stringify(env));
+    console.log(env);
+    console.log(scope);
+    scope = Object.assign(env);
+    console.log(env);
+    console.log(scope);
     function lambda() {
       var names = exp.vars;
       for (var i = 0; i < names.length; ++i)
