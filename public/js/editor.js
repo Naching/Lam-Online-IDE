@@ -1,3 +1,4 @@
+interpret(library); //load library function from library.js
 var input = document.getElementById('input');
 var myCodeMirror = CodeMirror.fromTextArea(input, {
   mode: "javascript",

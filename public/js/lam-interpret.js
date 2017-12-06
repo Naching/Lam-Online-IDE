@@ -1,15 +1,16 @@
 //entry point from browser
 var env = {};
+var out = "";
 function interpret(code){
   if (code === "") return "";
   try{
+    out = "";
       var scope = {};
-      code = library + "\n" + code;
       var ast = parse(TokenStream(InputStream(code)));
       //console.log(ast);
       var evaluated = evaluate(ast, env);
       //console.log(env);
-      return evaluated;
+      return out + evaluated;
     } catch(err){
       return err.message
     }
@@ -17,7 +18,7 @@ function interpret(code){
 
 //top-level eval function
 function evaluate(exp, scope){
-//console.log(scope);
+  console.log(exp);
   switch (exp.type) {
     case "num":
     case "str":
@@ -54,6 +55,14 @@ function evaluate(exp, scope){
       return val;
 
       case "call":
+      if(exp.func.value && exp.func.value === "print"){
+        exp.args.forEach(function(arg){out += evaluate(arg)})
+        return;
+      }
+      if(exp.func.value && exp.func.value === "println"){
+        exp.args.forEach(function(arg){out += evaluate(arg) + "<br>"})
+        return;
+      }
       var func = evaluate(exp.func, scope);
       return func.apply(null, exp.args.map(function(arg){
         return evaluate(arg, scope);

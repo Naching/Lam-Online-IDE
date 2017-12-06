@@ -11,4 +11,7 @@ num-min = lambda(a, b) if a < b then{a} else{b};
 
 #exponential function
 num-exp = lambda(a) num-e ^ a;
+
+#abs function
+num-abs = lambda(a) if a > 0 then{a} else{0 - a};
 `
