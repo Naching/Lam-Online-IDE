@@ -1,8 +1,35 @@
 <html>
   <head>
-    <title>Racket Editor</title>
+    <title>Interpreter</title>
+    <link rel="stylesheet" type="text/css" href="/public/style.css">
+    <script src="/public/js/lam-interpret.js"></script>
   </head>
   <body>
-
+    <div class='top-bar'>
+      <div class='editor-title'>Interpreter</div>
+      <div class='my-button run-button' onclick="run();">
+        Run
+      </div>
+      <div class='my-button stop-button' onclick="stop();">
+        Stop
+      </div>
+    </div>
+    <div class='main'>
+      <div class='edit-box'>
+        <textarea name="Text1" cols="80" rows="40" id='input'></textarea>
+      </div>
+      <div class='run-box' id='run'>
+        interpreter
+      </div>
+    </div>
   </body>
 </html>
+<script>
+  function run(){
+    console.log("run");
+    document.getElementById('run').innerHTML = interpret(document.getElementById('input').value);
+  }
+  function stop(){
+    console.log("stop");
+  }
+</script>

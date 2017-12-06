@@ -1,1 +1,77 @@
-a
+body{
+  background-color: #222;
+  color: #ccc;
+  font: sans-serif;
+}
+
+.top-bar{
+  overflow: hidden;
+    background-color: #ccc;
+    position: fixed;
+    top: 0;
+    left: -5%;
+    width: 105%;
+}
+
+.edit-box{
+  float: left;
+  text-align: left;
+  width: 50%;
+}
+
+.run-box{
+  float: right;
+  text-align: left;
+  width: 50%;
+}
+
+.main {
+    margin-top: 45px;
+}
+
+
+
+.editor-title{
+  padding:12px;
+  padding-left:100px;
+  float: left;
+  text-align: center;
+  dispay: block;
+  color: #222;
+}
+
+.my-button{
+  padding: 12px;
+  padding-left: 40px;
+  padding-right: 40px;
+  dispay: block;
+  margin-top: 0px;
+  float: right;
+  -webkit-transition-duration: .1s;
+  transition-duration: .1s;
+  cursor: pointer;
+}
+
+.my-button:hover{
+  margin:-4px;
+  padding-top:16px;
+  padding-bottom:16px;
+  padding-left:44px;
+  padding-right: 44px;
+}
+
+.stop-button{
+  background-color: #600;
+}
+
+.stop-button:hover {
+  background-color:#a00;
+}
+
+.run-button{
+  background-color: #006;
+}
+
+.run-button:hover{
+  background-color:#00a;
+}
