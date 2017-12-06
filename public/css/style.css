@@ -29,8 +29,6 @@ body{
     margin-top: 45px;
 }
 
-
-
 .editor-title{
   padding:12px;
   padding-left:100px;
@@ -52,6 +50,7 @@ body{
   cursor: pointer;
 }
 
+/*
 .my-button:hover{
   margin:-4px;
   padding-top:16px;
@@ -59,6 +58,7 @@ body{
   padding-left:44px;
   padding-right: 44px;
 }
+*/
 
 .stop-button{
   background-color: #600;
