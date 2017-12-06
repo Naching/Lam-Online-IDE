@@ -1,8 +1,9 @@
 //entry point from browser
+var env = {};
 function interpret(code){
   if (code === "") return "";
   try{
-      var env = {};
+      var scope = {};
       code = library + "\n" + code;
       var ast = parse(TokenStream(InputStream(code)));
       //console.log(ast);
@@ -15,8 +16,8 @@ function interpret(code){
 }
 
 //top-level eval function
-function evaluate(exp, env){
-//console.log(env);
+function evaluate(exp, scope){
+//console.log(scope);
   switch (exp.type) {
     case "num":
     case "str":
@@ -24,37 +25,38 @@ function evaluate(exp, env){
     return exp.value;
 
     case "var":
+    if (scope[exp.value] === 0 || scope[exp.value]) return scope[exp.value];
     if (env[exp.value] === 0 || env[exp.value]) return env[exp.value];
     throw new Error("Undefined identifier: " + exp.value);
 
     case "assign":
     if (exp.left.type != "var")
     throw new Error("Cannot assign to " + JSON.stringify(exp.left));
-    env[exp.left.value] = evaluate(exp.right, env);
-    return env[exp.left.value];
+    scope[exp.left.value] = evaluate(exp.right, scope);
+    return scope[exp.left.value];
 
     case "binary":
     return apply_op(exp.operator,
-      evaluate(exp.left, env),
-      evaluate(exp.right, env));
+      evaluate(exp.left, scope),
+      evaluate(exp.right, scope));
 
       case "lambda":
-      return make_lambda(env, exp);
+      return make_lambda(scope, exp);
 
       case "if":
-      var cond = evaluate(exp.cond, env);
-      if (cond !== false) return evaluate(exp.then, env);
-      return exp.else ? evaluate(exp.else, env) : false;
+      var cond = evaluate(exp.cond, scope);
+      if (cond !== false) return evaluate(exp.then, scope);
+      return exp.else ? evaluate(exp.else, scope) : false;
 
       case "prog":
       var val = false;
-      exp.prog.forEach(function(exp){ val = evaluate(exp, env) });
+      exp.prog.forEach(function(exp){ val = evaluate(exp, scope) });
       return val;
 
       case "call":
-      var func = evaluate(exp.func, env);
+      var func = evaluate(exp.func, scope);
       return func.apply(null, exp.args.map(function(arg){
-        return evaluate(arg, env);
+        return evaluate(arg, scope);
       }));
 
       default:
@@ -62,22 +64,25 @@ function evaluate(exp, env){
     }
   }
 
-  function make_lambda(env, exp) {
-    var scope = {};
-    for(var k in env) scope[k]=env[k];
-    var static_vars = JSON.parse(JSON.stringify(env));
-    for(var k in static_vars) scope[k]=static_vars[k];
+  function make_lambda(scope, exp) {
+    var inner_env = {};
+    for(var k in scope) inner_env[k]=scope[k]; //copies all scope to inner_env
+    var static_vars = JSON.parse(JSON.stringify(scope));
+
+    //overwrites scope variable refernces with actual values to maintain closure
+    for(var k in static_vars) inner_env[k]=static_vars[k];
+
     function lambda() {
       var names = exp.vars;
       for (var i = 0; i < names.length; ++i)
-      def_lam(names[i], i < arguments.length ? arguments[i] : false, scope);
-      return evaluate(exp.body, scope);
+      def_lam(names[i], i < arguments.length ? arguments[i] : false, inner_env);
+      return evaluate(exp.body, inner_env);
     }
     return lambda;
   }
 
-  function def_lam(name, value, scope) {
-    return scope[name] = value;
+  function def_lam(name, value, inner_env) {
+    return inner_env[name] = value;
   }
 
   function apply_op(op, a, b) {
