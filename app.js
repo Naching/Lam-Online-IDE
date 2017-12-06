@@ -20,8 +20,7 @@ app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/favicon.ico'));
 });
 
-//all other calls get editor page
-//may be a bad idea? not sure
+//index call gets editor page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/html/editor.html'));
 });
