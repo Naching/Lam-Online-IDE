@@ -41,7 +41,7 @@ function evaluate(exp, scope){
       evaluate(exp.left, scope),
       evaluate(exp.right, scope));
 
-      case "lambda":
+      case "lam":
       return make_lambda(scope, exp);
 
       case "if":
@@ -150,7 +150,7 @@ function evaluate(exp, scope){
 
   function TokenStream(input) {
     var current = null;
-    var keywords = " if then else lambda true false ";
+    var keywords = " if then else lam true false ";
     return {
       next  : next,
       peek  : peek,
@@ -362,7 +362,7 @@ function evaluate(exp, scope){
     }
     function parse_lambda() {
       return {
-        type: "lambda",
+        type: "lam",
         vars: delimited("(", ")", ",", parse_varname),
         body: parse_expression()
       };
@@ -388,7 +388,7 @@ function evaluate(exp, scope){
         if (is_punc("{")) return parse_prog();
         if (is_kw("if")) return parse_if();
         if (is_kw("true") || is_kw("false")) return parse_bool();
-        if (is_kw("lambda") || is_kw("Î»")) {
+        if (is_kw("lam") || is_kw("Î»")) {
           input.next();
           return parse_lambda();
         }
